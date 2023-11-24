@@ -4,7 +4,7 @@ This simple Common Lisp program allows you to manage a todo list and save it to 
 
 ## Dependencies
 
-- [SBCL (Steel Bank Common Lisp)](http://www.sbcl.org/)
+- [SBCL (Steel Bank Common Lisp)](https://www.sbcl.org/)
 
 ## Usage
 

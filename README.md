@@ -2,6 +2,10 @@
 
 This simple Common Lisp program allows you to manage a todo list and save it to `~/.config/common-lisp-todo.txt`. The program prompts you to enter task details such as title, date, and description, adds the task to the todo list, and saves the list to a file.
 
+## Dependencies
+
+- [SBCL (Steel Bank Common Lisp)](http://www.sbcl.org/)
+
 ## Usage
 
 1. Run the program.

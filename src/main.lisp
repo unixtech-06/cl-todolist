@@ -1,4 +1,8 @@
-;; Define global variables for todo-list and task details
+;; Example usage in your source file
+;; Note: The following declaration is considered deprecated and reduces safety checks.
+;;       Use it at your own discretion for improved performance.
+(declaim (optimize (safety 0)))
+
 (defvar *todo-list* '())
 (defvar *title* nil)
 (defvar *date* nil)

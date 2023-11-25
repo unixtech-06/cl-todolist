@@ -1,12 +1,4 @@
-;; Example usage in your source file
-;; Note: The following declaration is considered deprecated and reduces safety checks.
-;;       Use it at your own discretion for improved performance.
-;;(declaim (optimize (safety 0)))
-
 (defvar *todo-list* '())
-(defvar *title* nil)
-(defvar *date* nil)
-(defvar *description* nil)
 
 ;; Define a type for tasks using Common Lisp's type system
 (deftype task ()
@@ -24,26 +16,27 @@
   "Save the todo list to a file."
   (with-open-file (stream "~/.config/common-lisp-todo.txt"
                            :direction :output
-                           :if-exists :supersede)
+                           :if-exists :append  ; Use :append to append to an existing file
+                           :if-does-not-exist :create)  ; Ensure the directory and file are created
     (dolist (task *todo-list*)
       (format stream "~A - ~A - ~A~%"
-              (first task) (second task) (third task)))))
+              (first task) (second task) (third task)))
+    (terpri stream)))  ; Add a newline at the end of the file
 
 ;; Function to add a task to the todo list based on user input
 (defun add-task-from-user-input ()
   "Prompt the user for task information and add it to the todo list."
   (format t "Enter task title: ")
   (force-output)
-  (setf *title* (read-line))
-  (format t "Enter task date: ")
-  (force-output)
-  (setf *date* (read-line))
-  (format t "Enter task description: ")
-  (force-output)
-  (setf *description* (read-line))
-  ;; Add the task to the todo list and save
-  (add-task *title* *date* *description*)
-  (save-todo-list))
+  (let ((title (read-line)))
+    (format t "Enter task date: ")
+    (force-output)
+    (let ((date (read-line)))
+      (format t "Enter task description: ")
+      (force-output)
+      (let ((description (read-line)))
+        ;; Add the task to the todo list
+        (add-task title date description)))))
 
 ;; Main entry point for the program
 (defun main ()
@@ -51,8 +44,10 @@
   (format t "Adding a task to the todo list.~%")
   ;; Accept user input and add task to the list
   (add-task-from-user-input)
+  ;; Save the todo list and append to the file
+  (save-todo-list)
   (format t "Task added to the todo list and saved.~%"))
 
 ;; Call the main function to set initial data
-;; (main) -- Commented out to avoid immediate execution during build
+;;(main)
 
